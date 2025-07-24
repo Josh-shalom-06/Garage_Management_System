@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details - {{ car.model }} ({{ car.license_plate }})</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color:crimson;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        h2{
+            color:crimson;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .create-button {
+            background-color:crimson;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            display: inline-block;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 20px 0;
+        }
+        .create-button:hover {
+            background-color:rgba(237, 12, 218, 0.918);
+        }
+        
+</style>
+<body>
+    <div class="container">
+        <!-- Car Details Header -->
+        <h1 class="h1">Car Details: {{ car.model }} ({{ car.license_plate }})</h1>
+
+        <!-- Car Information -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>Car Information</strong>
+            </div>
+            <div class="card-body">
+                <p><strong>Owner:</strong> {{ car.customer }}</p>
+                <p><strong>Model:</strong> {{ car.model }}</p>
+                <p><strong>License Plate:</strong> {{ car.license_plate }}</p>
+                <p><strong>Make:</strong> {{ car.make }}</p>
+                <p><strong>Year:</strong> {{ car.year }}</p>
+            </div>
+        </div>
+
+        <!-- Service Records Header -->
+        <h2 class="h2">Service Records</h2>
+
+        <ul>
+            {% for service in service_records %}
+                <li>
+                    <strong>Date:</strong> {{ service.service_date }}<br>
+                    <strong>Description:</strong> {{ service.description }}
+                </li>
+            {% empty %}
+                <p>No service records found for this car.</p>
+            {% endfor %}
+        </ul>
+        
+
+        
+
+        <!-- Add New Service Record Button -->
+        <a href="{% url 'service_record_create' %}?car={{ car.id }}" ><button class="create-button">Add New Service Record</button></a>
+        <a href="{% url 'home' %}"><button class="create-button">Home</button></a>
+    </div>
+    
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

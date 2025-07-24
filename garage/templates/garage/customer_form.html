@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Customer</title>
+    <!-- Add some basic styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color:crimson;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .container {
+            width: 60%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        h1 {
+            color:aqua
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input, textarea {
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color:crimson;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color:rgb(241, 28, 135);
+        }
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            font-size: 16px;
+            color: crimson;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Create New Customer</h1>
+</header>
+
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="name">Name:</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            {{ form.email }}
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            {{ form.phone }}
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address:</label>
+            {{ form.address }}
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Create Customer</button>
+        </div>
+    </form>
+
+    <a href="{% url 'customer_list' %}" ><button>Back to Customer List</button></a>
+</div>
+
+</body>
+</html>

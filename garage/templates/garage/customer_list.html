@@ -1,0 +1,100 @@
+{% extends 'garage/base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+    <!-- Add some basic styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color:crimson;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .container {
+            background-image: url("{% static 'images/cu.jpg' %}");
+            background-size:cover;
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color:aquamarine;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .customer-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .customer-list li {
+            background-color: #e8e8e8;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .customer-list a {
+            color:crimson;
+            text-decoration: none;
+        }
+        .customer-list a:hover {
+            text-decoration: underline;
+        }
+        .create-button {
+            background-color:crimson;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            display: inline-block;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 20px 0;
+        }
+        .create-button:hover {
+            background-color:rgb(238, 37, 137);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Customer List</h1>
+</header>
+
+<div class="container">
+    <!-- Link to create a new customer -->
+    <a href="{% url 'customer_create' %}" class="create-button"><i class="bi bi-person-fill-add"> </i>Add New Customer</a>
+
+    <ul class="customer-list">
+        {% for customer in customers %}
+        <li>
+            <span>{{ customer.name }}</span>
+            <a href="{% url 'customer_detail' customer.pk %}">View Details</a>
+        </li>
+        {% empty %}
+        <li>No customers found.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}" class="create-button"><i class="bi bi-house-gear-fill"> </i>Home</a>
+
+</div>
+
+</body>
+</html>
+{% endblock content %}

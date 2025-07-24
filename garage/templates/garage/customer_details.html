@@ -1,0 +1,147 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+    <!-- Add some basic styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color:crimson;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: aqua;
+        }
+        .customer-details {
+            margin: 20px 0;
+        }
+        .customer-details p {
+            font-size: 18px;
+            line-height: 1.6;
+            color:black;
+        }
+        .details-heading {
+            font-size: 22px;
+            font-weight: bold;
+            color:rgb(198, 6, 67);
+            margin-top: 20px;
+        }
+        .car-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .car-list li {
+            background-color: #e8e8e8;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .car-list a {
+            color: crimson;
+            text-decoration: none;
+        }
+        .car-list a:hover {
+            text-decoration: underline;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .action-buttons a {
+            background-color: crimson;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .action-buttons a:hover {
+            background-color:rgb(231, 42, 137);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Customer Details</h1>
+</header>
+
+<div class="container">
+    <!-- Customer Information -->
+    <div class="customer-details">
+        <h2 class="details-heading">{{ customer.name }}</h2>
+        <p><strong>Email:</strong> {{ customer.email }}</p>
+        <p><strong>Phone:</strong> {{ customer.phone }}</p>
+        <p><strong>Address:</strong> {{ customer.address }}</p>
+    </div>
+
+    <!-- Car List (If any) -->
+    <div class="customer-cars">
+        <h2 class="details-heading">Cars</h2>
+        {% if customer.cars.all %}
+        <ul class="car-list">
+            {% for car in customer.cars.all %}
+            <li>
+                <span>{{ car.make }} {{ car.model }} ({{ car.year }})</span>
+                <a href="{% url 'car_details' car.pk %}">View Car Details</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No cars found for this customer.</p>
+        {% endif %}
+    </div>
+
+   
+    
+
+    <!-- Service Records 
+    <div class="customer-service-records">
+        <h2 class="details-heading">Service Records</h2>
+        {% if customer.service_records.all %}
+        <ul class="car-list">
+            {% for record in customer.service_records.all %}
+            <li>
+                <span>{{ record.date }} - {{ record.service_type }}</span>
+                <a href="{% url 'service_record_detail' record.pk %}">View Record</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No service records found for this customer.</p>
+        {% endif %}
+    </div>-->
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <a href="{% url 'customer_edit' customer.pk %}">Edit Customer</a>
+        <a href="{% url 'customer_delete' customer.pk %}">Delete Customer</a>
+        <a href="{% url 'customer_list' %}">Back to Customer List</a>
+
+    </div>
+</div>
+
+</body>
+</html>

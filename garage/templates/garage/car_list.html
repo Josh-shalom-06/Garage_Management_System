@@ -1,0 +1,144 @@
+
+{% extends 'garage/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car List</title>
+    <!-- Add some basic styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+        header {
+            background-color: crimson;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .container {
+            background-image: url("{% static 'images/v.jpg' %}");
+            background-size:cover;
+            width: 80%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: aquamarine;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .table {
+            background-color: rgba(0,0,0,0);
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn {
+            padding: 8px 12px;
+            margin: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: crimson;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: rgb(238, 37, 137);
+        }
+        .btn-danger {
+            background-color: #f44336;
+        }
+        .btn-danger:hover {
+            background-color: #e53935;
+        }
+        .btn-primary {
+            background-color: #008CBA;
+        }
+        .btn-primary:hover {
+            background-color: #0077b6;
+        }
+        .add-button {
+            margin: 20px 0;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Vehicles in Garage</h1>
+</header>
+
+<div class="container">
+    
+        <a href="{% url 'car_create' %}" class="btn"><i class="bi bi-plus-circle"> </i>Add New Car</a>
+    
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                    <th>License Plate</th>
+                    <th>Customer</th>
+                    <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in cars %}
+                <tr>
+                    <td>{{ car.make }}</td>
+                    <td>{{ car.model }}</td>
+                    <td>{{ car.year }}</td>
+                    <td>{{ car.license_plate }}</td>
+                    
+                    <td>{{ car.customer.name }}</td>
+                    <td>
+                        <a href="{% url 'car_edit' car.pk %}" class="btn btn-sm">Edit</a>
+                        <a href="{% url 'car_details' pk=car.pk %}" class="btn btn-sm">View Service Records</a>
+                        
+                    </td>
+
+                    
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No cars available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+    
+    <a href="{% url 'home' %}" class="btn"><i class="bi bi-house-gear-fill"> </i>Home</a>
+    
+</div>
+
+</body>
+</html>
+{% endblock content %}

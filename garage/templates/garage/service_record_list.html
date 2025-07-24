@@ -1,0 +1,184 @@
+{% extends 'garage/base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: crimson;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: aquamarine;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background-color: crimson;
+            color: white;
+        }
+        td a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        td a:hover {
+            text-decoration:none;
+        }
+        .add-button {
+            background-color: crimson;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            display: block;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+        .add-button:hover {
+            background-color: rgb(238, 37, 137);
+        }
+        .btn {
+            padding: 8px 12px;
+            margin: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: crimson;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: rgb(238, 37, 137);
+        }
+        .act-btn{
+            padding: 8px;
+            margin: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: crimson;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Service Records</h1>
+</header>
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>service id</th>
+                <th style="width: 13%;">Service Date </th>
+                <th>Vehicle</th>
+                <th>Mechanic</th>
+                    <th>Service Type</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th colspan="2">Actions</th>
+                    
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in service_records %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.service_date }}</td>
+                <td>{{ record.car }}</td>
+                <td>{{ record.mechanic }}</td>
+                <td>{{ record.service_type }}</td>
+                <td>{{ record.description }}</td>
+                <td>Rs.{{ record.amount }}</td>
+                
+                <td>
+                    <a href="{% url 'generate_invoice' record.id %}" class="btn">Invoice</a>
+                </td>
+            
+                <td>    <button class="btn " onclick="markServiceAsCompleted('{{ record.id }}')">Send SMS</button>
+                </td>
+
+                    <script>
+                        function markServiceAsCompleted(serviceRecordId) {
+                            if (confirm("Are you sure you want to mark this service as completed?")) {
+                                fetch(`/service_record/complete/${serviceRecordId}/`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRFToken': '{{ csrf_token }}', 
+                                        'Content-Type': 'application/json',
+                                    },
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                    }
+                                    return response.json();  // Parse JSON response
+                                })
+                                .then(data => {
+                                    alert(data.message);
+                                    if (data.message.includes('successfully')) {
+                                        location.reload();  // Reload to update the UI
+                                    }
+                                })
+                                .catch(error => {
+                                    alert('An error occurred: ' + error.message);
+                                });
+                            }
+                        }
+                        </script>
+                        
+
+                </td>
+            
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No service records available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'service_record_create' %}" class="btn"><i class="bi bi-plus-circle"> </i>Add New Service Record</a>
+    <a href="{% url 'home' %}" class="btn"><i class="bi bi-house-gear-fill"> </i>Home</a>
+</div>
+
+
+
+
+</body>
+</html>
+{% endblock content %}

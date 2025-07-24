@@ -1,0 +1,172 @@
+{% extends 'garage/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+        header {
+            background-color: crimson;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .container {
+            
+            background-size:cover;
+            width: 80%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: aquamarine;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        h2{
+            color: rgb(239, 0, 48);
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .table {
+            background-color: rgba(0,0,0,0);
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        input[type="number"] {
+            width: 60px;
+            text-align: center;
+        }
+        .update-btn {
+            padding: 8px 12px;
+            margin: 5px;
+            background-color:crimson;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+        .update-btn:hover {
+            background-color:rgb(143, 51, 229);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Stock List</h1>
+    </header>
+  
+<div class="container ">
+
+    
+
+    <h2>Low Stock Alert</h2>
+{% if low_stock_parts %}
+    <ul>
+        {% for part in low_stock_parts %}
+            <li>
+                {{ part.partname }} - Quantity: {{ part.qty }} (Threshold: {{ part.low_stock_threshold }})
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No low stock items!</p>
+{% endif %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Part Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Supplier</th>
+                <th>Total Value</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for part in parts %}
+            <tr>
+                <td>{{ part.partname }}</td>
+                <td>
+                    <input type="number" id="qty-{{ part.id }}" value="{{ part.qty }}" min="0">
+                </td>
+                <td>{{ part.price }}</td>
+                <td>{{ part.supplier }}</td>
+                <td>{{ part.total_stock_value }}</td>
+                <td>
+                    <button class="update-btn" onclick="updateStock('{{ part.id }}')">Update</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+
+    <script>
+        function updateStock(stockId) {
+    const quantity = document.getElementById(`qty-${stockId}`).value;
+
+    if (quantity === '' || isNaN(quantity) || parseInt(quantity) < 0) {
+        alert("Please enter a valid quantity.");
+        return;
+    }
+
+    console.log("Stock ID:", stockId);
+    console.log("Quantity:", quantity);
+
+    $.ajax({
+        url: "{% url 'update_stock_quantity' %}", // Replace with your actual URL name
+        type: "POST",
+        data: {
+            stock_id: stockId,
+            qty: quantity,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(response) {
+            alert(response.message); // Check response in case of errors
+            location.reload(); // Refresh the page to show updated data
+        },
+        error: function(xhr) {
+            alert("An error occurred: " + xhr.responseJSON.error); // Display error messages
+        }
+    });
+}
+
+    </script>
+    <a href="{% url 'stock_create' %}" class="update-btn"><i class="bi bi-plus-circle"> </i>Add New Stock</a>
+    <a href="{% url 'home' %}" class="update-btn"><i class="bi bi-house-gear-fill"> </i>Home</a>
+</div>
+</body>
+</html>
+{% endblock content %}

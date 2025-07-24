@@ -1,0 +1,62 @@
+.hm{
+    color:midnightblue;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0; 
+    padding: 20px;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+header {
+    
+    color:rgb(38, 6, 94);
+    font-family:'Courier New', Courier, monospace;
+
+    font-size:xx-large;
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 15px;
+}
+
+nav ul li a {
+    color:darkblue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h2 {
+    color: #333;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    
+    color:black;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.button{
+    color:darkblue;
+    background-color:crimson;
+    border: 0cap;
+    padding: 15px 32px;
+    font-size:x-large;
+    text-decoration: blue;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-radius: 8px;
+}
+.button:hover{
+    background-color: rgb(231, 42, 137);
+}

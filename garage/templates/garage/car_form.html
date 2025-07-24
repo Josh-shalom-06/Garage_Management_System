@@ -1,0 +1,114 @@
+<!-- garage/templates/garage/car_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color:crimson;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .container {
+            width: 60%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        h1 {
+            color:aqua
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input, textarea {
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .button {
+            background-color:crimson;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color:rgb(241, 28, 135);
+        }
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            font-size: 16px;
+            color: crimson;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ form.instance.pk|default:"Add New" }} Car</h1>
+    </header>    
+    <div class="container">
+        
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_make">Car Make</label>
+                {{ form.make }}
+            </div>
+            <div class="form-group">
+                <label for="id_model">Car Model</label>
+                {{ form.model }}
+            </div>
+            <div class="form-group">
+                <label for="id_license_plate">License Plate</label>
+                {{ form.license_plate }}
+            </div>
+            <div class="form-group">
+                <label for="id_year">Year</label>
+                {{ form.year }}
+            </div>
+            <div class="form-group">
+                <label for="id_customer">Customer</label>
+                {{ form.customer }}
+            </div>
+            <div class="form-group">
+            <button type="submit" class="button">Save Car</button>
+        </div>
+        </form>
+        <a href="{% url 'car_list' %}"><button class="button">Back to Vehicles</button> </a>
+    </div>
+</body>
+</html>
