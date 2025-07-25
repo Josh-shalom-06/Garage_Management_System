@@ -10,6 +10,9 @@ It incorporates features like real-time stock updates, service tracking, and aut
 - 👥 **Customer Management**  
   Add, edit, delete, and view customer details.
 
+- 👥 **Mechanic Management**  
+  Add, edit, delete, and view mechanic details.
+  
 - 🚘 **Vehicle Management**  
   Register and manage customer vehicles.
 
