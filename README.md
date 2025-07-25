@@ -43,5 +43,5 @@ It incorporates features like real-time stock updates, service tracking, and aut
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/your-username/garage-management-system.git
+git clone https://github.com/Josh-shalom-06/garage-management-system.git
 cd garage-management-system
